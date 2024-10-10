@@ -1,0 +1,29 @@
+0
+1
+2
+3
+106 PVpo-VMPO-MPN Hmx2 Gaba
+5
+6
+4
+8
+9
+128 VMH Fezf1 Glut
+10
+7
+11
+073 MEA-BST Sox6 Gaba
+049 Lamp5 Gaba
+131 LHA-AHN-PVH Otp Trh Glut
+115 MS-SF Bsx Glut
+300 PARN-MDRNd-NTS Gbx2 Gly-Gaba
+074 MEA-BST Lhx6 Sp9 Gaba
+196 PAG-PPN Pax5 Sox21 Gaba
+088 BST Tac2 Gaba
+068 LSX Otx2 Gaba
+099 SBPV-PVa Six6 Satb2 Gaba
+168 SPA-SPFm-SPFp-POL-PIL-PoT Sp9 Glut
+181 IC Tfap2d Maf Glut
+199 PAG-MRN-RN Foxa2 Gaba
+173 PAG Pou4f2 Glut
+327 Oligo NN

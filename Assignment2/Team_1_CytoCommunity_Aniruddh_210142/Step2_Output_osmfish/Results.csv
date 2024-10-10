@@ -1,0 +1,2 @@
+Image_Name,Num_TCN,Num_Run,Num_Epoch,Embedding_Dimension,Learning_Rate,Loss_Cutoff,Final_Loss
+osmfish,11,4,2500,128,0.001,-0.6,-0.8414141535758972

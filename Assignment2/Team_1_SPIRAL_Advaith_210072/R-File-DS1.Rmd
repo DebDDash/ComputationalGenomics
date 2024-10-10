@@ -1,0 +1,89 @@
+
+```{r}
+library(Seurat)
+library(ggplot2)
+library(patchwork)
+library(dplyr)
+library(ggsci)
+library(ggthemr)
+```
+
+```{r}
+get_cluster<-function(dirs,files,samples,res){
+    feat_file=files[[1]]
+    meta_file=files[[2]]
+    coord_file=files[[3]]
+    embed_file==files[[4]]
+    cluster_file=files[[5]]
+    count=read.csv(feat_file[1],header=T,row.names=1,sep=',')
+    meta=read.csv(meta_file[1],header=T,row.names=1,sep=',')
+    meta=data.frame(batch=meta[,'batch'])
+    rownames(meta)=rownames(count)
+    coord=read.csv(coord_file[1],header=T,row.names=1,sep=',')
+    flags=paste("_",samples[1],sep="")
+    
+    count=as(as.matrix(t(count)),'dgCMatrix')
+    obj<-CreateSeuratObject(counts=count,min.cells=0, min.features=0,meta.data=meta)
+    VariableFeatures(obj)<-rownames(obj)
+    #obj@assays$RNA@scale.data=as.matrix(count)
+    #obj<-ScaleData(obj)
+    
+
+
+    obj <- NormalizeData(obj)
+    obj <- ScaleData(obj)
+    
+    
+    
+    
+    obj<-RunPCA(obj,npcs=50)
+    # Get PCA embeddings and check the number of components
+    pca_embeddings <- Embeddings(obj, "pca")
+    n_pcs <- ncol(pca_embeddings)
+    obj<-RunUMAP(obj,reduction='pca',dims=1:n_pcs)
+    obj@images$image <- new(
+        Class = 'SlideSeq',
+        assay = "Spatial",
+        key = "image_",
+        coordinates = coord
+     )
+    embed=read.csv(embed_file,header=T,row.names=1)
+    znoise_dim=1
+    if(dim(embed)[2]==16){
+        znoise_dim=3}else{
+        znoise_dim=5
+    }
+    embed=embed[colnames(obj),znoise_dim:dim(embed)[2]]
+    obj[['spiral']]<-CreateDimReducObject(embeddings=as.matrix(embed), key = "spiral_", assay = DefaultAssay(obj))
+    obj <-RunUMAP(obj, reduction = "spiral",dims=1:dim(embed)[2],reduction.name="spiral.umap")
+    obj<-FindNeighbors(obj, dims=1:dim(embed)[2],reduction='spiral')
+    obj<-FindClusters(obj, resolution = res)
+    write.csv(as.data.frame(obj$seurat_clusters),cluster_file)
+    return(obj)
+}
+
+```
+
+```{r}
+
+#####set res make there are 9 clusters#######
+res=0.6
+path="C:/Users/Advaith Kannan/Downloads/"
+
+samples=c("1")
+
+feat_file=paste(path,samples[1],"_mat.csv",sep="")
+meta_file=paste(path,samples[1],"_meta.csv",sep="")
+coord_file=paste(path,samples[1],"_coord.csv",sep="")
+flags=paste("_",samples[1],sep="")
+
+embed_file=paste(dirs,"SPIRAL_1_embed_512.csv",sep="")
+cluster_file=paste(dirs,flags,'_seuratmethod_clust_modify3.csv',sep="")
+files=list(feat_file,meta_file,coord_file,embed_file,cluster_file)
+
+embed = read.csv(embed_file, header = TRUE, row.names = 1)
+print(embed)
+
+obj=get_cluster(dirs,files,samples,res)
+```
+
