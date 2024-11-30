@@ -10,7 +10,7 @@ The models were trained and inferenced on a Google Colab environment with the fo
 - Approximately 12 GB RAM
 - Python v3.10.14
 
-You can reproduce the python environment using the `requirements.txt` file. Alternately if running on Kaggle/Colab, please run the following command - `!pip install anndata scanpy numpy pandas tqdm scikit-learn matplotlib scipy annoy`. This command is specified at the beginning of each notebook as well. 
+You can reproduce the python environment using the `requirements.txt` file. Alternately if running on Kaggle/Colab, please run the following command - `!pip install anndata scanpy numpy pandas tqdm scikit-learn matplotlib scipy annoy`. 
 
 ## Code
 
