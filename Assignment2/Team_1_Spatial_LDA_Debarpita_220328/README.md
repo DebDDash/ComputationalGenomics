@@ -1,6 +1,6 @@
 # cs690-Spatial-LDA
 
-This repository contains the codebase and documentation for the second assignment in the course CS690, offered in 2024-25-I. Submission made by Debarpita Dash(220328)
+Submission made by Debarpita Dash(220328)
 
 ## Environment Information
 
